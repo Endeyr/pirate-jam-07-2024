@@ -11,15 +11,17 @@ export class Preloader extends Scene {
 		//  Load the assets for the game - Replace with your own assets
 		this.load.setPath('assets')
 		// tilemap assets
-		this.load.image('Creation', '/images/Creation.png')
-		this.load.image('Explode', '/images/Explode.png')
-		this.load.image('Tileset', '/images/Tileset.png')
-		this.load.tilemapTiledJSON('fire', '/json/fire.json')
+		this.load.image('Creation', 'images/Creation.png')
+		this.load.image('Explode', 'images/Explode.png')
+		this.load.image('Tileset', 'images/Tileset.png')
+		this.load.tilemapTiledJSON('fire', 'json/fire.json')
 
 		// player assets
-		this.load.spritesheet('Player', '/images/Character.png', {
+		this.load.spritesheet('Player', 'images/Character.png', {
 			frameWidth: 32,
 			frameHeight: 32,
+			startFrame: 0,
+			endFrame: 72,
 		})
 	}
 	// Runs once, after all assets in preload are loaded
