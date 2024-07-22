@@ -1,11 +1,12 @@
 import { Scene } from 'phaser'
 import { Player } from '../Player'
+import { Direction } from './../Directions'
 import { GridControls } from './../GridControls'
 import { GridPhysics } from './../GridPhysics'
 
 export class Game extends Scene {
 	camera: Phaser.Cameras.Scene2D.Camera
-	player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+	player: Player
 	cursors: Phaser.Types.Input.Keyboard.CursorKeys
 	mouse: Phaser.Input.Mouse.MouseManager
 	showDebug = false
@@ -105,31 +106,17 @@ export class Game extends Scene {
 			spawnPoint.y || 300,
 			'Player',
 			0
-		) as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+		) as Player
 
 		// Watch the player and worldLayer for collisions, for the duration of the scene:
 		this.physics.add.collider(this.player, worldLayer)
 
 		// Create player walking animations
-		const anims = this.anims
-		anims.create({
-			key: 'walk',
-			frames: anims.generateFrameNames('Player', {
-				start: 0,
-				end: 1,
-			}),
-			frameRate: 10,
-			repeat: -1,
-		})
-		anims.create({
-			key: 'run',
-			frames: anims.generateFrameNames('Player', {
-				start: 25,
-				end: 32,
-			}),
-			frameRate: 10,
-			repeat: -1,
-		})
+		this.createPlayerAnimation(Direction.UP, 0, 1)
+		this.createPlayerAnimation(Direction.DOWN, 0, 1)
+		this.createPlayerAnimation(Direction.LEFT, 0, 1)
+		this.createPlayerAnimation(Direction.RIGHT, 0, 1)
+
 		// Camera
 		const cameraSize = 1920
 		this.camera = this.cameras.main
@@ -171,32 +158,31 @@ export class Game extends Scene {
 		})
 	}
 
+	// method to create player animations
+	private createPlayerAnimation(
+		name: string,
+		startFrame: number,
+		endFrame: number
+	) {
+		this.anims.create({
+			key: name,
+			frames: this.anims.generateFrameNumbers('Player', {
+				start: startFrame,
+				end: endFrame,
+			}),
+			frameRate: 10,
+			repeat: -1,
+			yoyo: true,
+		})
+	}
+
 	update() {
 		if (!this.player.body) {
 			console.error('Player body does not exist')
 			return
 		}
-
+		// physics
 		this.gridControls.update()
 		this.gridPhysics.update()
-
-		// Update the animation last and give left/right animations precedence over up/down animations
-		// if (this.cursors.left.isDown) {
-		// 	this.player.setFlipX(true)
-		// 	this.player.anims.play('walk', true)
-		// } else if (this.cursors.right.isDown) {
-		// 	this.player.setFlipX(false)
-		// 	this.player.anims.play('walk', true)
-		// } else if (this.cursors.up.isDown) {
-		// 	this.player.anims.play('walk', true)
-		// } else if (this.cursors.down.isDown) {
-		// 	this.player.anims.play('walk', true)
-		// } else {
-		// 	this.player.anims.stop()
-
-		// If we were moving, pick and idle frame to use
-		// if (prevVelocity.x < 0) this.player.setTexture('Player', 0)
-		// else if (prevVelocity.x > 0) this.player.setTexture('Player', 0)
-		// }
 	}
 }

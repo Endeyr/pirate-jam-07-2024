@@ -1,4 +1,5 @@
 import { Direction } from './Directions'
+import { Player } from './Player'
 import { Game } from './scenes/Game'
 
 const Vector2 = Phaser.Math.Vector2
@@ -15,17 +16,18 @@ export class GridPhysics {
 	}
 	private readonly speedPixelsPerSecond: number = Game.tileSize * 16
 	private currentDirection: Direction = Direction.NONE
-	constructor(
-		private player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
-	) {}
+	constructor(private player: Player) {}
 
 	movePlayer(direction: Direction): void {
 		this.currentDirection = direction
+		this.player.startAnimation(direction)
+		this.updatePlayerTilePos()
 		this.updatePlayerVelocity()
 	}
 
 	stopMoving(): void {
 		this.currentDirection = Direction.NONE
+		this.player.stopAnimation()
 		this.updatePlayerVelocity()
 	}
 
@@ -39,6 +41,17 @@ export class GridPhysics {
 		} else {
 			this.player.setVelocity(0, 0)
 		}
+	}
+
+	private updatePlayerTilePos() {
+		this.player.setTilePos(
+			this.player
+				.getTilePos()
+				.add(
+					this.movementDirectionVectors[this.currentDirection] ||
+						new Phaser.Math.Vector2()
+				)
+		)
 	}
 
 	update(): void {}
