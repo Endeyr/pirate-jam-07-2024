@@ -16,6 +16,9 @@ export class Preloader extends Scene {
 		this.load.image('Tileset', 'images/Tileset.png')
 		this.load.tilemapTiledJSON('fire', 'json/fire.json')
 
+		// game assets
+		this.load.image('UI', 'images/Inventory.png')
+
 		// player assets
 		this.load.spritesheet('Player', 'images/Character.png', {
 			frameWidth: 32,

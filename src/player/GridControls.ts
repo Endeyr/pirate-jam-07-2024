@@ -8,7 +8,11 @@ export class GridControls {
 		private input: Phaser.Input.InputPlugin,
 		private gridPhysics: GridPhysics
 	) {
-		this.cursors = this.input.keyboard!.createCursorKeys()
+		if (!this.input.keyboard) {
+			console.error('No keyboard detected')
+			return
+		}
+		this.cursors = this.input.keyboard.createCursorKeys()
 	}
 
 	update() {

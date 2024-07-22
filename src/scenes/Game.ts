@@ -1,8 +1,9 @@
 import { Scene } from 'phaser'
-import { Player } from '../Player'
-import { Direction } from './../Directions'
-import { GridControls } from './../GridControls'
-import { GridPhysics } from './../GridPhysics'
+import { InventoryWindowFactory } from '../inventory/ui/InventoryWindowFactory'
+import { Direction } from '../player/Directions'
+import { GridControls } from '../player/GridControls'
+import { GridPhysics } from '../player/GridPhysics'
+import { Player } from '../player/Player'
 
 export class Game extends Scene {
 	camera: Phaser.Cameras.Scene2D.Camera
@@ -14,6 +15,7 @@ export class Game extends Scene {
 	static readonly scale: number = 3
 	gridControls: GridControls
 	gridPhysics: GridPhysics
+	inventory: InventoryWindowFactory
 
 	constructor() {
 		super('Game')
@@ -127,6 +129,13 @@ export class Game extends Scene {
 			console.error('Input not found')
 			return
 		}
+
+		// inventory
+		this.input.keyboard.on('keydown-I', () => {
+			if (!this.inventory) {
+				this.inventory = new InventoryWindowFactory(this)
+			}
+		})
 
 		// Create the grid objects
 		this.gridPhysics = new GridPhysics(this.player)

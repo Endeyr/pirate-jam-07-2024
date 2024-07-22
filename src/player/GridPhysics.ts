@@ -1,6 +1,6 @@
+import { Game } from '../scenes/Game'
 import { Direction } from './Directions'
 import { Player } from './Player'
-import { Game } from './scenes/Game'
 
 const Vector2 = Phaser.Math.Vector2
 type Vector2Type = Phaser.Math.Vector2
@@ -14,7 +14,7 @@ export class GridPhysics {
 		[Direction.LEFT]: Vector2.LEFT,
 		[Direction.RIGHT]: Vector2.RIGHT,
 	}
-	private readonly speedPixelsPerSecond: number = Game.tileSize * 16
+	private readonly speedPixelsPerSecond: number = Game.tileSize * 20
 	private currentDirection: Direction = Direction.NONE
 	constructor(private player: Player) {}
 

@@ -1,5 +1,5 @@
+import { Game } from '../scenes/Game'
 import { Direction } from './Directions'
-import { Game } from './scenes/Game'
 
 export class Player extends Phaser.Physics.Arcade.Sprite {
 	tilePos: Phaser.Math.Vector2
