@@ -17,7 +17,8 @@ export class Preloader extends Scene {
 		this.load.tilemapTiledJSON('fire', 'json/fire.json')
 
 		// game assets
-		this.load.image('UI', 'images/Inventory.png')
+		this.load.image('Inventory', 'images/ui/Inventory.png')
+		this.load.image('Slot', 'images/ui/Slot.png')
 
 		// player assets
 		this.load.spritesheet('Player', 'images/Character.png', {

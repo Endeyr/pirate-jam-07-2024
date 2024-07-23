@@ -133,7 +133,7 @@ export class Game extends Scene {
 		// inventory
 		this.input.keyboard.on('keydown-I', () => {
 			if (!this.inventory) {
-				this.inventory = new InventoryWindowFactory(this)
+				this.inventory = InventoryWindowFactory.create(this)
 			}
 		})
 
