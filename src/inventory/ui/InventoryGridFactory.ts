@@ -1,14 +1,21 @@
-import { InventoryGridSlotFactory } from './InventoryGridSlotFactory'
-import { InventoryGridSlotSpriteFactory } from './InventoryGridSlotSpriteFactory'
-
 export class InventoryGridFactory {
 	static create(scene: Phaser.Scene) {
 		const inventorySlots = 28
-		const slots = InventoryGridSlotFactory.create(
-			scene,
-			inventorySlots,
-			InventoryGridSlotSpriteFactory.create
-		)
+		let slots: Phaser.GameObjects.Graphics[] = []
+		for (let i = 0; i < inventorySlots; i++) {
+			const slot = scene.add.graphics()
+			slot.lineStyle(10, 0x000)
+			slot.fillStyle(0xfff)
+			slot.beginPath()
+			slot.moveTo(0, 0)
+			slot.lineTo(160, 0)
+			slot.lineTo(160, 160)
+			slot.lineTo(0, 160)
+			slot.lineTo(0, 0)
+			slot.closePath()
+			slot.strokePath()
+			slots.push(slot)
+		}
 
 		const cols = 4
 		const rows = 7

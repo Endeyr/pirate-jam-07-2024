@@ -12,7 +12,7 @@ export class Game extends Scene {
 	mouse: Phaser.Input.Mouse.MouseManager
 	showDebug = false
 	static readonly tileSize: number = 16
-	static readonly scale: number = 3
+	static readonly scale: number = 1
 	gridControls: GridControls
 	gridPhysics: GridPhysics
 	inventory: InventoryWindowFactory
@@ -112,6 +112,7 @@ export class Game extends Scene {
 
 		// Watch the player and worldLayer for collisions, for the duration of the scene:
 		this.physics.add.collider(this.player, worldLayer)
+		this.player.setCollideWorldBounds(true)
 
 		// Create player walking animations
 		this.createPlayerAnimation(Direction.UP, 0, 1)
@@ -124,6 +125,7 @@ export class Game extends Scene {
 		this.camera = this.cameras.main
 		this.camera.startFollow(this.player, true)
 		this.camera.setBounds(0, 0, cameraSize, cameraSize)
+		this.camera.setZoom(4)
 		// Inputs
 		if (!this.input.keyboard || !this.input.mouse) {
 			console.error('Input not found')
@@ -131,26 +133,26 @@ export class Game extends Scene {
 		}
 
 		// inventory
-		this.input.keyboard.on('keydown-I', () => {
-			if (!this.inventory) {
-				this.inventory = InventoryWindowFactory.create(this)
-			}
-		})
+		// this.input.keyboard.on('keydown-I', () => {
+		// 	if (!this.inventory) {
+		// 		this.inventory = InventoryWindowFactory.create(this)
+		// 	}
+		// })
 
 		// Create the grid objects
 		this.gridPhysics = new GridPhysics(this.player)
 		this.gridControls = new GridControls(this.input, this.gridPhysics)
 
 		// Help text that has a "fixed" position on the screen
-		this.add
-			.text(16, 16, 'Arrow keys to move\nPress "D" to show hitboxes', {
-				font: '18px monospace',
-				padding: { x: 20, y: 10 },
-				backgroundColor: '#ffffff',
-				color: '#000',
-			})
-			.setScrollFactor(0)
-			.setDepth(30)
+		// this.add
+		// 	.text(16, 16, 'Arrow keys to move\nPress "D" to show hitboxes', {
+		// 		font: '18px monospace',
+		// 		padding: { x: 20, y: 10 },
+		// 		backgroundColor: '#ffffff',
+		// 		color: '#000',
+		// 	})
+		// 	.setScrollFactor(0)
+		// 	.setDepth(30)
 
 		// Debug graphics
 		this.input.keyboard.once('keydown-D', () => {

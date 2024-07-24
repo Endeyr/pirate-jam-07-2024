@@ -14,7 +14,7 @@ export class GridPhysics {
 		[Direction.LEFT]: Vector2.LEFT,
 		[Direction.RIGHT]: Vector2.RIGHT,
 	}
-	private readonly speedPixelsPerSecond: number = Game.tileSize * 20
+	private readonly speedPixelsPerSecond: number = Game.tileSize * 8
 	private currentDirection: Direction = Direction.NONE
 	constructor(private player: Player) {}
 
